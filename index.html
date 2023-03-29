@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <title>AR Viking Prototype</title>
+    <!-- <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script> -->
+    <script type="importmap">
+    {
+    "imports": {
+        "three": "https://unpkg.com/three@0.147.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.147.0/examples/jsm/",
+        "mindar-image-three":"https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image-three.prod.js"
+    }
+    }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import {MindARThree} from 'mindar-image-three';
+        import {loadVideo} from "../../libs/loader.js";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // const button = document.createElement('button');
+            // button.textContent = 'Start';
+            // button.addEventListener('click', function() {
+                
+            // });
+            // document.body.appendChild(button);
+
+            let video = null;
+            const init = async() => {
+                video = await loadVideo("./assets/videos/viking-ar.mp4");
+                video.play();
+                video.pause();
+                start();
+            }
+
+            const start = async() => {
+                const mindarThree = new MindARThree({
+                    container: document.querySelector("#app"),
+                    imageTargetSrc: './assets/targets/viking-target.mind',
+                });
+                
+                const {renderer, scene, camera} = mindarThree;
+
+                
+                const video = await loadVideo("./assets/videos/viking-ar.mp4");
+                const texture = new THREE.VideoTexture(video);
+
+                const geometry = new THREE.PlaneGeometry(1, 1080/1920);
+                const material = new THREE.MeshBasicMaterial({map: texture});
+                const plane = new THREE.Mesh(geometry, material);
+
+                const anchor = mindarThree.addAnchor(0);
+                anchor.group.add(plane);
+
+                anchor.onTargetFound = () => {
+                    video.play();
+                }
+                anchor.onTargetLost = () => {
+                    video.pause();
+                }
+                video.addEventListener( 'play', () => {
+                    video.currentTime = 0;
+                });
+
+                await mindarThree.start();
+                renderer.setAnimationLoop(() => {
+                    renderer.render(scene, camera);
+                });
+        }
+        //start();
+        //init();
+        const confirm = document.createElement('div');
+            const confirmButton = document.createElement('button');
+            confirm.textContent = 'Click to allow camera';
+            confirmButton.textContent = 'OK';
+            confirm.appendChild(confirmButton);
+            document.body.appendChild(confirm);
+            confirmButton.addEventListener('click', init);
+       
+        });
+        
+    </script>
+    <!-- <script type="module" src="./assets/js/main.js"></script> -->
+    <script data-consolejs-channel="d716b1ea-0c6e-6c39-61ab-348156acc2bb" src="https://remotejs.com/agent/agent.js"></script>
+
+</head>
+<body>
+    <div id="app"></div>
+</body>
+</html>
