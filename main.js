@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let video = null;
     const init = async() => {
         video = await loadVideo("./videos/viking-ar.mp4");
+        video.width = 1920;
+        video.height = 1080;
         video.play();
         video.pause();
         start();
@@ -20,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const {renderer, scene, camera} = mindarThree;
 
         const video = await loadVideo('./videos/viking-ar.mp4');
+        video.width = 1920;
+        video.height = 1080;
 
         const texture = new THREE.VideoTexture(video);
 
