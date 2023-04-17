@@ -5,7 +5,7 @@ import { loadVideo } from "./libs/loader.js";
 document.addEventListener('DOMContentLoaded', () => {
     let video = null;
     const init = async() => {
-        video = await loadVideo("./assets/videos/viking-ar.mp4");
+        video = await loadVideo("./videos/viking-ar.mp4");
         video.play();
         video.pause();
         start();
@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const start = async() => {
         const mindarThree = new MindARThree({
             container: document.body,
-            imageTargetSrc: './assets/targets/viking-target.mind',
+            imageTargetSrc: './targets/viking-target.mind',
         });
 
         const {renderer, scene, camera} = mindarThree;
 
-        const video = await loadVideo('./assets/videos/viking-ar.mp4');
+        const video = await loadVideo('./videos/viking-ar.mp4');
 
         const texture = new THREE.VideoTexture(video);
 
