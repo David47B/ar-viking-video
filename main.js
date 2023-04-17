@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const start = async() => {
         const mindarThree = new MindARThree({
-            container: document.body,
+            container: document.querySelector('#app'),
             imageTargetSrc: './targets/viking-target.mind',
         });
 
