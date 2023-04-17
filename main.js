@@ -6,8 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let video = null;
     const init = async() => {
         video = await loadVideo("./videos/viking-ar.mp4");
-        video.width = 1920;
-        video.height = 1080;
+        video.setAttribute('width', '720')
+        video.setAttribute('height', '1280')
+        video.needsUpdate = true;
         video.play();
         video.pause();
         start();
@@ -22,12 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const {renderer, scene, camera} = mindarThree;
 
         const video = await loadVideo('./videos/viking-ar.mp4');
-        video.width = 1920;
-        video.height = 1080;
+        video.setAttribute('width', '720')
+        video.setAttribute('height', '1280')
+        video.needsUpdate = true;
 
         const texture = new THREE.VideoTexture(video);
 
-        const geometry = new THREE.PlaneGeometry(1, 1080/1920);
+        const geometry = new THREE.PlaneGeometry(9/2, 16/2);
         const material = new THREE.MeshBasicMaterial({map: texture});
         const plane = new THREE.Mesh(geometry, material);
 
