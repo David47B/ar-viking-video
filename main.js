@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             video.pause();
         }
         video.addEventListener( 'play', () => {
-            video.currentTime = 6;
+            video.currentTime = 0;
         });
 
         await mindarThree.start();

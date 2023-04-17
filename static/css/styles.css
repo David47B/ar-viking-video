@@ -6,5 +6,7 @@
 
 video {
     width: 100%;
+    max-width: 1080px;
+    max-height: 1920px;
     aspect-ratio: 9/16;
 }
