@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const texture = new THREE.VideoTexture(video);
 
-        const geometry = new THREE.PlaneGeometry(9/2, 16/2);
+        const geometry = new THREE.PlaneGeometry(1, 1280/720);
         const material = new THREE.MeshBasicMaterial({map: texture});
         const plane = new THREE.Mesh(geometry, material);
 
